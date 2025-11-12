@@ -1,0 +1,28 @@
+def greedy_set_cover(universe, subsets):
+    covered = set()
+    selected_subsets = []
+
+    while covered != universe:
+        subset = max(subsets, key=lambda s: len(s - covered))
+        selected_subsets.append(subset)
+        covered |= subset
+
+    return selected_subsets, len(selected_subsets)
+
+universe = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+subsets = [
+    {1, 2, 3},
+    {2, 4, 6},
+    {3, 5, 7},
+    {1, 4, 7, 10},
+    {5, 6, 8, 9}
+]
+
+chosen_subsets, count = greedy_set_cover(universe, subsets)
+
+print("Выбранные множества:")
+for idx, s in enumerate(chosen_subsets, 1):
+    print(f"S{idx} = {s}")
+
+print(f"Общее количество выбранных элементов: {sum(len(s) & {s} for s in chosen_subsets)}")
+print(f"Количество выбранных множеств: {len(chosen_subsets)}")
